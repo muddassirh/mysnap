@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Star, ShieldCheck, Zap, ArrowRight } from 'lucide-react'
 
 const container = {
@@ -123,33 +124,26 @@ export default function Hero() {
               transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
               className="relative z-10 bg-white rounded-3xl shadow-2xl shadow-blue-100 p-5 border border-blue-50"
             >
-              {/* Simulated passport photo frame */}
-              <div className="relative bg-slate-100 rounded-2xl overflow-hidden aspect-[3/4] mb-4">
-                {/* Background silhouette area */}
-                <div className="absolute inset-0 flex flex-col items-center justify-end pb-6">
-                  {/* Head shape */}
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-b from-slate-300 to-slate-400 mb-0 shadow-inner" />
-                  {/* Shoulders */}
-                  <div className="w-44 h-20 rounded-t-full bg-gradient-to-b from-slate-300 to-slate-400 -mt-4" />
-                </div>
-                {/* Neutral bg */}
-                <div className="absolute inset-0 bg-gradient-to-b from-blue-50/80 to-slate-100/80" />
+              {/* ── CHANGED: real photo replaces the silhouette placeholder ── */}
+              <div className="relative rounded-2xl overflow-hidden aspect-[3/4] mb-4">
+                <Image
+                  src="/home-img.png"
+                  alt="Passport photo example"
+                  fill
+                  className="object-cover object-top"
+                  priority
+                />
 
-                {/* AI verified badge */}
+                {/* AI verified badge — sits on top of the image */}
                 <motion.div
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 1.2, type: 'spring', stiffness: 200 }}
-                  className="absolute top-3 right-3 bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1"
+                  className="absolute top-3 right-3 bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-lg"
                 >
                   <ShieldCheck className="w-3 h-3" />
                   Verified
                 </motion.div>
-
-                {/* Measurement guides */}
-                <div className="absolute left-2 top-8 bottom-8 w-px bg-blue-300/40 border-l border-dashed border-blue-300/40" />
-                <div className="absolute right-2 top-8 bottom-8 w-px bg-blue-300/40 border-r border-dashed border-blue-300/40" />
-                <div className="absolute top-8 left-8 right-8 h-px bg-blue-300/40 border-t border-dashed border-blue-300/40" />
               </div>
 
               {/* Status info below photo */}
@@ -168,22 +162,25 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            {/* Floating thumb strip */}
+            {/* Floating thumb strip — now shows 4 small copies of the same image */}
             <motion.div
               initial={{ opacity: 0, x: 30, y: 20 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                animation: 'float 6s ease-in-out 1s infinite',
-              }}
+              style={{ animation: 'float 6s ease-in-out 1s infinite' }}
               className="absolute -right-8 top-12 z-20 bg-white rounded-2xl shadow-xl shadow-slate-200 p-2.5 border border-slate-100 flex flex-col gap-2"
             >
               {[...Array(4)].map((_, i) => (
                 <div
                   key={i}
-                  className="w-14 h-[70px] rounded-lg bg-gradient-to-b from-slate-200 to-slate-300 overflow-hidden relative"
+                  className="w-14 h-[70px] rounded-lg overflow-hidden relative bg-slate-100"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-b from-blue-50/60 to-transparent" />
+                  <Image
+                    src="/home-img.png"
+                    alt={`Copy ${i + 1}`}
+                    fill
+                    className="object-cover object-top"
+                  />
                 </div>
               ))}
               <p className="text-center text-[10px] font-semibold text-blue-600">×4 copies</p>
