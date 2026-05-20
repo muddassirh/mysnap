@@ -130,7 +130,7 @@ export default function Hero() {
                   src="/home-img.png"
                   alt="Passport photo example"
                   fill
-                  className="object-cover object-top"
+                  className="object-contain"
                   priority
                 />
 
@@ -176,7 +176,7 @@ export default function Hero() {
                   className="w-14 h-[70px] rounded-lg overflow-hidden relative bg-slate-100"
                 >
                   <Image
-                    src="/home-img.png"
+                    src="/home2.jpg"
                     alt={`Copy ${i + 1}`}
                     fill
                     className="object-cover object-top"
