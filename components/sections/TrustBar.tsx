@@ -1,56 +1,76 @@
 'use client'
 
+import { FadeIn, StaggerContainer, staggerItem } from '@/components/ui/animations'
 import { motion } from 'framer-motion'
-import { FadeIn } from '@/components/ui/animations'
 
 const stats = [
-  { value: '500K+', label: 'Photos Created' },
-  { value: '99.8%', label: 'Acceptance Rate' },
-  { value: '150+', label: 'Countries Supported' },
-  { value: '4.9★', label: 'Average Rating' },
+  { value: '500K+', label: 'Photos created' },
+  { value: '99.8%', label: 'Acceptance rate' },
+  { value: '150+', label: 'Countries supported' },
+  { value: '< 5s', label: 'Average turnaround' },
 ]
 
 const countries = [
-  '🇺🇸 USA', '🇬🇧 UK', '🇨🇦 Canada', '🇦🇺 Australia', '🇩🇪 Germany', '🇫🇷 France', '🇮🇳 India', '🇯🇵 Japan',
+  'United States',
+  'United Kingdom',
+  'Canada',
+  'Australia',
+  'Germany',
+  'France',
+  'India',
+  'Japan',
+  'Brazil',
+  'Mexico',
 ]
 
 export default function TrustBar() {
   return (
-    <section className="py-12 bg-white border-y border-slate-100">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        {/* Stats row */}
+    <section className="py-16 lg:py-20 bg-white">
+      <div className="container-page">
+        {/* Stats — bigger, more weight, less crowding */}
         <FadeIn>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-y divide-x divide-slate-100 lg:divide-y-0 border border-slate-100 rounded-2xl overflow-hidden bg-white">
             {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div
-                  className="text-3xl font-bold text-blue-600 mb-1"
-                  style={{ fontFamily: 'var(--font-sora)' }}
-                >
+              <div
+                key={stat.label}
+                className="px-6 py-7 text-center"
+              >
+                <div className="font-display font-semibold text-slate-900 text-3xl sm:text-4xl tracking-tight">
                   {stat.value}
                 </div>
-                <div className="text-sm text-slate-500 font-medium">{stat.label}</div>
+                <div className="text-sm text-slate-500 mt-1.5 font-medium">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
         </FadeIn>
 
-        {/* Countries scroll */}
-        <FadeIn delay={0.2}>
-          <p className="text-center text-xs uppercase tracking-widest text-slate-400 font-semibold mb-4">
-            Accepted in 150+ countries including
+        {/* Country list — restrained, no emoji */}
+        <FadeIn delay={0.15} className="mt-12">
+          <p className="text-center text-[11px] uppercase tracking-[0.18em] text-slate-400 font-semibold mb-5">
+            Compliant with photo standards across
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <StaggerContainer
+            className="flex flex-wrap items-center justify-center gap-2"
+            staggerDelay={0.03}
+          >
             {countries.map((country) => (
-              <span
+              <motion.span
                 key={country}
-                className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-full text-sm font-medium text-slate-600 hover:border-blue-300 hover:text-blue-600 transition-colors cursor-default"
+                variants={staggerItem}
+                className="px-3.5 py-1.5 bg-slate-50 border border-slate-200/80 rounded-full text-sm font-medium text-slate-600 transition-colors duration-150 hover:border-slate-300 hover:bg-white"
               >
                 {country}
-              </span>
+              </motion.span>
             ))}
-            <span className="px-3 py-1.5 text-sm font-medium text-blue-500">+ 142 more</span>
-          </div>
+            <motion.span
+              variants={staggerItem}
+              className="px-3.5 py-1.5 text-sm font-medium text-blue-600"
+            >
+              + 140 more
+            </motion.span>
+          </StaggerContainer>
         </FadeIn>
       </div>
     </section>

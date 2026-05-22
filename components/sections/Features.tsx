@@ -1,88 +1,69 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ShieldCheck, Clock, Globe2, Smartphone, Zap, HeadphonesIcon } from 'lucide-react'
-import { FadeIn, StaggerContainer, staggerItem } from '@/components/ui/animations'
+import {
+  ShieldCheck,
+  Clock,
+  Globe2,
+  Smartphone,
+  Sparkles,
+  Headphones,
+} from 'lucide-react'
+import { StaggerContainer, staggerItem } from '@/components/ui/animations'
+import SectionHeading from '@/components/ui/SectionHeading'
 
 const features = [
   {
     icon: ShieldCheck,
-    title: '100% Acceptance Guarantee',
+    title: '100% acceptance guarantee',
     description:
-      'If your photo is rejected by any government authority, we will retake or fully refund you — no questions asked.',
-    color: 'text-emerald-600',
-    bg: 'bg-emerald-50',
+      'If your photo is rejected by any government authority, we re-do it or refund you in full. No fine print.',
   },
   {
-    icon: Zap,
-    title: 'AI-Powered in 3 Seconds',
+    icon: Sparkles,
+    title: 'AI-powered in seconds',
     description:
-      'State-of-the-art computer vision automatically removes backgrounds, corrects lighting, and checks compliance in real-time.',
-    color: 'text-blue-600',
-    bg: 'bg-blue-50',
+      'Computer vision handles background removal, cropping, lighting, and biometric checks automatically.',
   },
   {
     icon: Globe2,
-    title: '150+ Country Standards',
+    title: '150+ country standards',
     description:
-      'We maintain an always-updated database of biometric requirements for passports, visas, and ID cards worldwide.',
-    color: 'text-indigo-600',
-    bg: 'bg-indigo-50',
+      'A database of biometric requirements for every passport, visa, and ID type, kept up-to-date by our team.',
   },
   {
     icon: Smartphone,
-    title: 'Works on Any Device',
+    title: 'Works on any device',
     description:
-      'Take or upload your photo directly from your phone, tablet, or desktop — no app download required.',
-    color: 'text-purple-600',
-    bg: 'bg-purple-50',
+      'Take or upload directly from your phone, tablet, or laptop. Nothing to install.',
   },
   {
     icon: Clock,
-    title: 'Instant Digital Delivery',
+    title: 'Instant digital delivery',
     description:
-      'Download your compliant passport photo immediately. Printable 4×6 sheets with multiple copies included.',
-    color: 'text-amber-600',
-    bg: 'bg-amber-50',
+      'Download a compliant photo immediately, plus a print-ready 4×6 sheet with multiple copies.',
   },
   {
-    icon: HeadphonesIcon,
-    title: '24/7 Expert Support',
+    icon: Headphones,
+    title: 'Real human support',
     description:
-      'Our compliance team is available around the clock to answer questions and ensure your photo meets all requirements.',
-    color: 'text-rose-600',
-    bg: 'bg-rose-50',
+      'Our compliance team is available around the clock to answer questions before you submit.',
   },
 ]
 
 export default function Features() {
   return (
-    <section id="features" className="py-20 lg:py-28 bg-gradient-to-b from-slate-50 to-white">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        {/* Header */}
-        <div className="grid lg:grid-cols-2 gap-8 items-end mb-16">
-          <FadeIn>
-            <span className="inline-block px-4 py-1.5 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
-              Why Choose Us
-            </span>
-            <h2
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight"
-              style={{ fontFamily: 'var(--font-sora)' }}
-            >
-              Everything you need for a perfect passport photo
-            </h2>
-          </FadeIn>
-          <FadeIn delay={0.15}>
-            <p className="text-slate-500 text-lg leading-relaxed">
-              We combine cutting-edge AI with human expertise to deliver passport photos that are guaranteed to be accepted — faster and cheaper than any photo studio.
-            </p>
-          </FadeIn>
-        </div>
+    <section id="features" className="py-24 lg:py-32 bg-white">
+      <div className="container-page">
+        <SectionHeading
+          eyebrow="Why MySnapPass"
+          title="Built for one job, done exceptionally well"
+          description="Every detail — AI accuracy, expert review, country-specific rules — exists to make sure your first submission is your last."
+        />
 
-        {/* Feature grid */}
         <StaggerContainer
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          staggerDelay={0.1}
+          className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          staggerDelay={0.08}
         >
           {features.map((feat) => {
             const Icon = feat.icon
@@ -90,16 +71,20 @@ export default function Features() {
               <motion.div
                 key={feat.title}
                 variants={staggerItem}
-                whileHover={{ y: -4, transition: { duration: 0.22 } }}
-                className="group bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-lg hover:shadow-slate-100 transition-all duration-300"
+                className="group relative bg-white rounded-2xl p-6 border border-slate-200/70 shadow-card hover:shadow-card-hover hover:border-slate-300 hover:-translate-y-1 transition-all duration-300 cursor-default"
               >
-                <div className={`w-11 h-11 ${feat.bg} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  <Icon className={`w-5 h-5 ${feat.color}`} strokeWidth={1.75} />
+                <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-5 transition-colors duration-200 group-hover:bg-blue-100 group-hover:border-blue-200">
+                  <Icon
+                    className="w-[20px] h-[20px] text-blue-600"
+                    strokeWidth={2}
+                  />
                 </div>
-                <h3 className="text-base font-bold text-slate-800 mb-2" style={{ fontFamily: 'var(--font-sora)' }}>
+                <h3 className="font-display text-[17px] font-semibold text-slate-900 mb-2">
                   {feat.title}
                 </h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{feat.description}</p>
+                <p className="text-sm text-slate-600 leading-relaxed text-pretty">
+                  {feat.description}
+                </p>
               </motion.div>
             )
           })}

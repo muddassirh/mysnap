@@ -3,57 +3,57 @@
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Link from 'next/link'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 
 /* ─── Tip Data ────────────────────────────────────────────────── */
 const tips = [
   {
     number: '1',
-    title: 'Consider the distance',
+    title: 'Mind the distance',
     description:
-      'Keep your front-facing camera 16–20 inches (40–50 cm) away from your face. For rear cameras, maintain a 4–6 foot (1–2 meter) distance for the best framing.',
+      'Keep your front camera 40–50 cm (16–20 in) from your face. For a rear camera, stand 1–2 m away for better framing.',
     goodLabel: 'Correct distance',
-    badLabel: 'Too close / angled',
+    badLabel: 'Too close, angled',
     goodScene: 'distance',
     badScene: 'distance-bad',
   },
   {
     number: '2',
-    title: 'Keep your head and body straight',
+    title: 'Head and body straight',
     description:
-      'Look directly into the camera and avoid tilting your body or head. Portrait mode is unacceptable for passport photos — always shoot in landscape or square.',
-    goodLabel: 'Head straight, front-facing',
-    badLabel: 'Head tilted or turned',
+      'Look directly into the camera. Don\'t tilt. Portrait mode isn\'t accepted — shoot landscape or square.',
+    goodLabel: 'Head straight',
+    badLabel: 'Head tilted',
     goodScene: 'straight',
     badScene: 'tilted',
   },
   {
     number: '3',
-    title: 'Prepare good lighting',
+    title: 'Use even lighting',
     description:
-      'Take your photo in a daylight setting, like near a window on a sunny day. Shadows on your face or in the background are not permitted by any country.',
-    goodLabel: 'Even, soft lighting',
-    badLabel: 'Shadows or harsh light',
+      'Shoot in daylight, ideally near a window. No shadows on your face or in the background — they fail every standard.',
+    goodLabel: 'Soft, even light',
+    badLabel: 'Harsh shadows',
     goodScene: 'lighting',
     badScene: 'lighting-bad',
   },
   {
     number: '4',
-    title: 'Use a plain white background',
+    title: 'Plain background',
     description:
-      'Stand in front of a plain white or off-white wall. Remove any furniture, patterns, or objects. Our AI will clean the background automatically.',
-    goodLabel: 'Clean white background',
-    badLabel: 'Cluttered background',
+      'Stand in front of a plain white or off-white wall. Skip furniture and patterns — our AI cleans up the rest.',
+    goodLabel: 'Clean background',
+    badLabel: 'Cluttered scene',
     goodScene: 'background',
     badScene: 'background-bad',
   },
   {
     number: '5',
-    title: 'Keep a neutral expression',
+    title: 'Neutral expression',
     description:
-      'Maintain a calm, neutral expression with your mouth closed and eyes open. Avoid big smiles, raised eyebrows, or surprised looks.',
-    goodLabel: 'Neutral expression',
-    badLabel: 'Smiling or surprised',
+      'Calm face, mouth closed, eyes open. Save the smile for the holiday photos — biometric scans need neutral.',
+    goodLabel: 'Neutral face',
+    badLabel: 'Big smile',
     goodScene: 'expression',
     badScene: 'expression-bad',
   },
@@ -61,7 +61,7 @@ const tips = [
     number: '6',
     title: 'Remove glasses',
     description:
-      'Most countries, including the US and UK, prohibit glasses in passport photos due to biometric scanning. Remove all eyewear before taking your photo.',
+      'The US, UK, and most countries prohibit glasses in passport photos. Take them off before you snap.',
     goodLabel: 'No glasses',
     badLabel: 'Glasses on',
     goodScene: 'glasses',
@@ -69,7 +69,7 @@ const tips = [
   },
 ]
 
-/* ─── Face SVG Illustration ───────────────────────────────────── */
+/* ─── Face SVG Illustration (preserved from original) ─────────── */
 function FaceIllustration({ scene, isGood }: { scene: string; isGood: boolean }) {
   const skin = '#f5cba7'
   const hair = '#5d3a1a'
@@ -82,11 +82,10 @@ function FaceIllustration({ scene, isGood }: { scene: string; isGood: boolean })
       xmlns="http://www.w3.org/2000/svg"
       className="w-full h-full"
       style={{ transform: isTilted ? 'rotate(-10deg)' : 'none' }}
+      aria-hidden="true"
     >
-      {/* BG */}
       <rect width="180" height="220" fill={bg} />
 
-      {/* Bad background clutter */}
       {scene === 'background-bad' && (
         <g opacity="0.35">
           <rect x="0" y="0" width="35" height="220" fill="#9ca3af" />
@@ -96,25 +95,18 @@ function FaceIllustration({ scene, isGood }: { scene: string; isGood: boolean })
         </g>
       )}
 
-      {/* Bad lighting shadow */}
       {scene === 'lighting-bad' && (
         <ellipse cx="52" cy="130" rx="40" ry="65" fill="rgba(0,0,0,0.22)" />
       )}
 
       {/* Shirt */}
       <ellipse cx="90" cy="238" rx="64" ry="52" fill={isGood ? '#bfdbfe' : '#fca5a5'} />
-
       {/* Neck */}
       <rect x="79" y="162" width="22" height="26" rx="8" fill={skin} />
-
       {/* Head */}
       <ellipse cx="90" cy="128" rx="46" ry="54" fill={skin} />
-
       {/* Hair */}
-      <path
-        d="M44 118 Q43 68 90 56 Q137 68 136 118 Q130 62 90 60 Q50 62 44 118Z"
-        fill={hair}
-      />
+      <path d="M44 118 Q43 68 90 56 Q137 68 136 118 Q130 62 90 60 Q50 62 44 118Z" fill={hair} />
 
       {/* Eyebrows */}
       {scene === 'expression-bad' ? (
@@ -147,11 +139,7 @@ function FaceIllustration({ scene, isGood }: { scene: string; isGood: boolean })
       )}
 
       {/* Nose */}
-      <path
-        d="M90 138 Q87 150 83 154 Q90 157 97 154 Q93 150 90 138Z"
-        fill="#e8a87c"
-        opacity="0.7"
-      />
+      <path d="M90 138 Q87 150 83 154 Q90 157 97 154 Q93 150 90 138Z" fill="#e8a87c" opacity="0.7" />
 
       {/* Mouth */}
       {scene === 'expression-bad' ? (
@@ -171,7 +159,7 @@ function FaceIllustration({ scene, isGood }: { scene: string; isGood: boolean })
         </g>
       )}
 
-      {/* Distance label (tip 1 good) */}
+      {/* Distance label */}
       {scene === 'distance' && (
         <g>
           <line x1="8" y1="105" x2="44" y2="120" stroke="#2563eb" strokeWidth="1.5" strokeDasharray="3 2" />
@@ -182,18 +170,20 @@ function FaceIllustration({ scene, isGood }: { scene: string; isGood: boolean })
   )
 }
 
-/* ─── Single Tip Card ─────────────────────────────────────────── */
+/* ─── Tip Card ────────────────────────────────────────────────── */
 function TipCard({ tip }: { tip: (typeof tips)[0] }) {
   return (
-    <div className="flex-shrink-0 w-[300px] sm:w-[360px] bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden snap-start select-none">
-      {/* Before / After photo comparison */}
+    <div className="flex-shrink-0 w-[300px] sm:w-[360px] bg-white rounded-2xl border border-slate-200/70 shadow-card overflow-hidden snap-start select-none">
       <div className="grid grid-cols-2 border-b border-slate-100 bg-slate-50">
-        {/* GOOD side */}
-        <div className="relative overflow-hidden border-r border-slate-100" style={{ aspectRatio: '3/4' }}>
+        {/* GOOD */}
+        <div
+          className="relative overflow-hidden border-r border-slate-100"
+          style={{ aspectRatio: '3/4' }}
+        >
           <FaceIllustration scene={tip.goodScene} isGood={true} />
-          <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white/95 backdrop-blur-sm rounded-full pl-1 pr-2.5 py-0.5 shadow border border-emerald-100 whitespace-nowrap">
+          <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white/95 backdrop-blur-sm rounded-full pl-1 pr-2.5 py-0.5 shadow-sm border border-emerald-100 whitespace-nowrap">
             <div className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
-              <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
+              <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none" aria-hidden>
                 <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
@@ -201,12 +191,12 @@ function TipCard({ tip }: { tip: (typeof tips)[0] }) {
           </div>
         </div>
 
-        {/* BAD side */}
+        {/* BAD */}
         <div className="relative overflow-hidden" style={{ aspectRatio: '3/4' }}>
           <FaceIllustration scene={tip.badScene} isGood={false} />
-          <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white/95 backdrop-blur-sm rounded-full pl-1 pr-2.5 py-0.5 shadow border border-red-100 whitespace-nowrap">
+          <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white/95 backdrop-blur-sm rounded-full pl-1 pr-2.5 py-0.5 shadow-sm border border-red-100 whitespace-nowrap">
             <div className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center flex-shrink-0">
-              <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
+              <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none" aria-hidden>
                 <path d="M3 3l4 4M7 3l-4 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </div>
@@ -215,27 +205,22 @@ function TipCard({ tip }: { tip: (typeof tips)[0] }) {
         </div>
       </div>
 
-      {/* Text row — number + title + description */}
       <div className="p-5 flex gap-4 items-start">
-        {/* Large outlined amber number — exactly like photoaid */}
         <span
-          className="text-6xl font-black leading-none flex-shrink-0 mt-0.5"
+          className="text-6xl font-display font-bold leading-none flex-shrink-0 mt-0.5"
           style={{
-            fontFamily: 'var(--font-sora, Georgia, serif)',
             WebkitTextStroke: '2px #f59e0b',
             color: 'transparent',
           }}
+          aria-hidden
         >
           {tip.number}
         </span>
         <div className="min-w-0">
-          <h3
-            className="font-bold text-slate-900 text-base mb-1.5 leading-snug"
-            style={{ fontFamily: 'var(--font-sora, Georgia, serif)' }}
-          >
+          <h3 className="font-display font-semibold text-slate-900 text-base mb-1.5 leading-snug">
             {tip.title}
           </h3>
-          <p className="text-sm text-slate-500 leading-relaxed">{tip.description}</p>
+          <p className="text-sm text-slate-600 leading-relaxed text-pretty">{tip.description}</p>
         </div>
       </div>
     </div>
@@ -269,66 +254,71 @@ export default function PhotoTips() {
   }
 
   return (
-    <section ref={sectionRef} className="py-20 lg:py-28 bg-[#f7f8fa] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+    <section
+      id="tips"
+      ref={sectionRef}
+      className="py-24 lg:py-32 bg-slate-50/60 overflow-hidden"
+    >
+      <div className="container-page">
         <div className="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-14">
-
-          {/* ── LEFT: sticky info column ── */}
+          {/* LEFT: sticky info column */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -24 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:sticky lg:top-28 lg:w-72 xl:w-80 flex-shrink-0"
+            className="lg:sticky lg:top-28 lg:w-80 flex-shrink-0"
           >
-            <h2
-              className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3 leading-tight"
-              style={{ fontFamily: 'var(--font-sora, Georgia, serif)' }}
-            >
-              Passport photo-taking tips
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-100 text-xs font-semibold tracking-wide uppercase mb-5">
+              Pro tips
+            </span>
+            <h2 className="font-display text-display-lg font-semibold text-slate-900 leading-tight tracking-tight text-balance">
+              How to take the perfect source photo
             </h2>
 
-            {/* Amber accent rule — signature photoaid detail */}
-            <div className="w-10 h-[3px] bg-amber-400 rounded-full mb-5" />
+            <div className="w-10 h-[3px] bg-amber-400 rounded-full mt-5 mb-6" />
 
-            <p className="text-slate-500 text-base leading-relaxed mb-8">
-              Follow these guidelines to create the perfect passport picture. Our AI will handle the rest.
+            <p className="text-slate-600 text-base leading-relaxed mb-8 text-pretty">
+              Follow these six rules and your photo will sail through review. Our
+              AI cleans up the rest — background, sizing, color balance.
             </p>
 
             <Link
               href="https://mysnappass.com/upload"
-              className="inline-flex items-center justify-center px-7 py-3.5 bg-slate-900 hover:bg-slate-700 text-white font-semibold rounded-2xl text-sm transition-all duration-200 hover:-translate-y-0.5 shadow-md"
+              className="inline-flex items-center gap-2 px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-sm transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md"
             >
               Choose a document
+              <ArrowRight className="w-4 h-4" />
             </Link>
 
-            {/* Desktop navigation */}
+            {/* Desktop nav */}
             <div className="hidden lg:flex items-center gap-3 mt-10">
               <button
                 onClick={() => scrollToIndex(Math.max(0, activeIndex - 1))}
                 disabled={activeIndex === 0}
-                aria-label="Previous"
-                className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:border-blue-400 hover:text-blue-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                aria-label="Previous tip"
+                className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:border-slate-300 hover:text-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => scrollToIndex(Math.min(tips.length - 1, activeIndex + 1))}
                 disabled={activeIndex === tips.length - 1}
-                aria-label="Next"
-                className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:border-blue-400 hover:text-blue-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                aria-label="Next tip"
+                className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:border-slate-300 hover:text-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-4 h-4" />
               </button>
 
-              {/* Dot track */}
               <div className="flex items-center gap-1.5 ml-1">
                 {tips.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => scrollToIndex(i)}
                     aria-label={`Tip ${i + 1}`}
-                    className={`rounded-full transition-all duration-300 ${
-                      i === activeIndex ? 'w-5 h-2 bg-blue-600' : 'w-2 h-2 bg-slate-300 hover:bg-slate-400'
+                    className={`rounded-full transition-all duration-300 cursor-pointer ${
+                      i === activeIndex
+                        ? 'w-5 h-2 bg-slate-900'
+                        : 'w-2 h-2 bg-slate-300 hover:bg-slate-400'
                     }`}
                   />
                 ))}
@@ -336,11 +326,11 @@ export default function PhotoTips() {
             </div>
           </motion.div>
 
-          {/* ── RIGHT: horizontal scroll track ── */}
+          {/* RIGHT: scrolling track */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 32 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="flex-1 min-w-0"
           >
             <div
@@ -354,9 +344,13 @@ export default function PhotoTips() {
                 <motion.div
                   key={tip.number}
                   data-card
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.1 + i * 0.06,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                 >
                   <TipCard tip={tip} />
                 </motion.div>
@@ -370,7 +364,7 @@ export default function PhotoTips() {
                   <div
                     key={i}
                     className={`rounded-full transition-all duration-300 ${
-                      i === activeIndex ? 'w-5 h-2 bg-blue-600' : 'w-2 h-2 bg-slate-300'
+                      i === activeIndex ? 'w-5 h-2 bg-slate-900' : 'w-2 h-2 bg-slate-300'
                     }`}
                   />
                 ))}
@@ -379,22 +373,25 @@ export default function PhotoTips() {
                 <button
                   onClick={() => scrollToIndex(Math.max(0, activeIndex - 1))}
                   disabled={activeIndex === 0}
-                  className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 disabled:opacity-30 disabled:cursor-not-allowed"
+                  aria-label="Previous"
+                  className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <ChevronLeft className="w-4 h-4" />
                 </button>
-                <span className="text-sm text-slate-400 font-medium">{activeIndex + 1} / {tips.length}</span>
+                <span className="text-sm text-slate-500 font-medium">
+                  {activeIndex + 1} / {tips.length}
+                </span>
                 <button
                   onClick={() => scrollToIndex(Math.min(tips.length - 1, activeIndex + 1))}
                   disabled={activeIndex === tips.length - 1}
-                  className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 disabled:opacity-30 disabled:cursor-not-allowed"
+                  aria-label="Next"
+                  className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  <ChevronRight className="w-5 h-5" />
+                  <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
           </motion.div>
-
         </div>
       </div>
     </section>

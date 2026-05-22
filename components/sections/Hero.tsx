@@ -3,227 +3,195 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Star, ShieldCheck, Zap, ArrowRight } from 'lucide-react'
+import { Star, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react'
 
 const container = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.15 },
   },
 }
 
 const item = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 18 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
   },
 }
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/40 to-white">
-      {/* Background grid */}
-      <div
-        className="absolute inset-0 opacity-40"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      />
+    <section className="relative pt-28 lg:pt-36 pb-16 lg:pb-24 overflow-hidden">
+      {/* Background — single, soft, premium */}
+      <div className="absolute inset-0 -z-10 bg-white">
+        {/* Soft radial wash, top */}
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-70"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(37,99,235,0.10), transparent 60%)',
+          }}
+        />
+        {/* Very subtle dot pattern */}
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-[0.5]"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle, rgba(15,23,42,0.06) 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+            maskImage:
+              'radial-gradient(ellipse 70% 60% at 50% 35%, black 30%, transparent 75%)',
+            WebkitMaskImage:
+              'radial-gradient(ellipse 70% 60% at 50% 35%, black 30%, transparent 75%)',
+          }}
+        />
+      </div>
 
-      {/* Blue glow blob top-right */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-100 rounded-full blur-[120px] opacity-50 -translate-y-1/3 translate-x-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-50 rounded-full blur-[100px] opacity-60 translate-y-1/3 -translate-x-1/4 pointer-events-none" />
-
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 py-16 lg:py-24 grid lg:grid-cols-2 gap-14 lg:gap-8 items-center">
-        {/* Left: Text Content */}
+      <div className="container-page grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
+        {/* LEFT — Content */}
         <motion.div
           variants={container}
           initial="hidden"
           animate="visible"
           className="text-center lg:text-left"
         >
-          {/* Badge */}
-          <motion.div variants={item} className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-100 rounded-full text-blue-700 text-xs font-semibold uppercase tracking-wider mb-6">
-            {/* <Zap className="w-3.5 h-3.5" /> */}
-            AI-Powered • 3-Second Processing
+          {/* Eyebrow / status pill */}
+          <motion.div
+            variants={item}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-[12px] font-medium text-slate-700"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="text-slate-700">
+              <span className="font-semibold">12,847</span> photos created this week
+            </span>
           </motion.div>
 
           {/* Headline */}
           <motion.h1
             variants={item}
-            className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-slate-900 mb-6"
-            style={{ fontFamily: 'var(--font-sora)' }}
+            className="mt-6 font-display font-semibold tracking-tight text-slate-900 text-display-2xl text-balance"
           >
-            Passport Photos{' '}
+            Passport photos,{' '}
             <span className="relative inline-block">
-              <span className="gradient-text">Done Right</span>
-              <motion.span
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ delay: 0.9, duration: 0.5, ease: 'easeOut' }}
-                className="absolute -bottom-1 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 to-blue-300 rounded-full origin-left"
-              />
+              <span className="gradient-text">approved on the first try.</span>
             </span>
-            {' '}in Seconds
           </motion.h1>
 
+          {/* Subhead */}
           <motion.p
             variants={item}
-            className="text-lg text-slate-500 leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0"
+            className="mt-6 text-lg lg:text-xl leading-relaxed text-slate-600 max-w-xl mx-auto lg:mx-0 text-pretty"
           >
-            Upload your selfie and our AI instantly creates compliant passport photos verified for government acceptance — no studio, no hassle.
+            Upload a selfie. Our AI handles background, sizing, and biometric
+            compliance in under 5 seconds — guaranteed accepted by 150+
+            governments or your money back.
           </motion.p>
 
-          {/* CTA Buttons */}
-          <motion.div variants={item} className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-10">
+          {/* CTAs */}
+          <motion.div
+            variants={item}
+            className="mt-9 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
+          >
             <Link
               href="https://mysnappass.com/upload"
-              className="shine-hover group inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl shadow-xl shadow-blue-200 hover:shadow-blue-300 hover:-translate-y-0.5 transition-all duration-200 text-base"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-btn-blue hover:shadow-btn-blue-hover hover:-translate-y-0.5 transition-all duration-200 text-[15px]"
             >
-              Create My Photo
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <Sparkles className="w-4 h-4" strokeWidth={2.25} />
+              Create my photo — $4.99
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
             <Link
-              href="https://mysnappass.com/#how-it-works"
-              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white border border-slate-200 hover:border-blue-300 text-slate-700 hover:text-blue-600 font-semibold rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 text-base"
+              href="#how-it-works"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-all duration-200 text-[15px]"
             >
-              See How It Works
+              See how it works
             </Link>
           </motion.div>
 
-          {/* Social Proof */}
-          <motion.div variants={item} className="flex flex-col sm:flex-row items-center lg:items-start gap-4">
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-              ))}
+          {/* Proof line — directly under CTAs */}
+          <motion.div
+            variants={item}
+            className="mt-7 flex flex-col sm:flex-row items-center lg:items-center gap-4 sm:gap-6 justify-center lg:justify-start"
+          >
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                ))}
+              </div>
+              <span className="text-sm text-slate-600">
+                <span className="font-semibold text-slate-900">4.9</span>
+                <span className="text-slate-400 mx-1">·</span>
+                <span>12,000+ reviews</span>
+              </span>
             </div>
-            <div className="text-sm text-slate-500">
-              <span className="font-semibold text-slate-700">4.9/5</span> from 12,000+ happy customers
-            </div>
-            <div className="flex items-center gap-1.5 text-sm text-emerald-600 font-medium">
-              <ShieldCheck className="w-4 h-4" />
-              100% Acceptance Guarantee
+            <div className="hidden sm:block w-px h-4 bg-slate-200" />
+            <div className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700">
+              <ShieldCheck className="w-4 h-4" strokeWidth={2.25} />
+              Money-back guarantee
             </div>
           </motion.div>
         </motion.div>
 
-        {/* Right: Passport Photo Mockup */}
+        {/* RIGHT — Hero visual: let the asset breathe */}
         <motion.div
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
           className="relative flex justify-center lg:justify-end"
         >
-          <div className="relative w-[340px] sm:w-[420px]">
-            {/* Main photo card */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative z-10 bg-white rounded-3xl shadow-2xl shadow-blue-100 p-5 border border-blue-50"
-            >
-              {/* ── CHANGED: real photo replaces the silhouette placeholder ── */}
-              <div className="relative rounded-2xl overflow-hidden aspect-[3/4] mb-4">
-                <Image
-                  src="/home-img.png"
-                  alt="Passport photo example"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-
-                {/* AI verified badge — sits on top of the image */}
-                <motion.div
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 1.2, type: 'spring', stiffness: 200 }}
-                  className="absolute top-3 right-3 bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-lg"
-                >
-                  <ShieldCheck className="w-3 h-3" />
-                  Verified
-                </motion.div>
-              </div>
-
-              {/* Status info below photo */}
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs text-slate-400 font-medium">Document Type</p>
-                  <p className="text-sm font-semibold text-slate-700">US Passport</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-slate-400 font-medium">Size</p>
-                  <p className="text-sm font-semibold text-slate-700">2×2 inches</p>
-                </div>
-                <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-1.5 text-center">
-                  <p className="text-xs font-semibold text-emerald-600">✓ Ready</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Floating thumb strip — now shows 4 small copies of the same image */}
-            <motion.div
-              initial={{ opacity: 0, x: 30, y: 20 }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              style={{ animation: 'float 6s ease-in-out 1s infinite' }}
-              className="absolute -right-8 top-12 z-20 bg-white rounded-2xl shadow-xl shadow-slate-200 p-2.5 border border-slate-100 flex flex-col gap-2"
-            >
-              {[...Array(4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-14 h-[70px] rounded-lg overflow-hidden relative bg-slate-100"
-                >
-                  <Image
-                    src="/home2.jpg"
-                    alt={`Copy ${i + 1}`}
-                    fill
-                    className="object-cover object-top"
-                  />
-                </div>
-              ))}
-              <p className="text-center text-[10px] font-semibold text-blue-600">×4 copies</p>
-            </motion.div>
-
-            {/* Processing time badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.5 }}
-              className="absolute -left-6 top-1/3 z-20 bg-blue-600 text-white rounded-2xl shadow-xl shadow-blue-200 px-4 py-3"
-            >
-              <p className="text-2xl font-bold" style={{ fontFamily: 'var(--font-sora)' }}>3s</p>
-              <p className="text-[10px] opacity-80 font-medium">Processing</p>
-            </motion.div>
-
-            {/* AI check badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.4, type: 'spring' }}
-              className="absolute -bottom-4 left-10 z-20 bg-white rounded-2xl shadow-xl shadow-slate-200 px-4 py-2.5 border border-slate-100 flex items-center gap-2"
-            >
-              {/* <div className="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center">
-                <Zap className="w-4 h-4 text-blue-600" />
-              </div> */}
-              <div>
-                <p className="text-xs font-bold text-slate-800">AI Verified</p>
-                <p className="text-[10px] text-slate-400">100% Compliant</p>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Bottom wave */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-          <path
-            d="M0 80H1440V40C1320 70 1200 80 1080 72C960 64 840 40 720 40C600 40 480 64 360 72C240 80 120 70 0 40V80Z"
-            fill="white"
+          {/* Soft shadow plate behind the image — gives depth without competing badges */}
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-10 blur-3xl opacity-60"
+            style={{
+              background:
+                'radial-gradient(circle at 60% 40%, rgba(37,99,235,0.18), transparent 60%)',
+            }}
           />
-        </svg>
+
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+            className="relative w-full max-w-[520px]"
+          >
+            <Image
+              src="/home-img.png"
+              alt="A selfie transformed into a compliant passport photo with multiple print-ready copies"
+              width={640}
+              height={640}
+              priority
+              className="w-full h-auto select-none pointer-events-none"
+            />
+
+            {/* ONE accent card — the proof point, not a sticker explosion */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.5 }}
+              className="absolute -bottom-2 left-2 sm:left-6 bg-white rounded-2xl shadow-card-hover border border-slate-100 p-3 pr-4 flex items-center gap-3"
+            >
+              <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+                <ShieldCheck className="w-[18px] h-[18px] text-emerald-600" strokeWidth={2.25} />
+              </div>
+              <div>
+                <p className="text-[13px] font-semibold text-slate-900 leading-tight">
+                  AI compliance check
+                </p>
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  Passes US, UK, EU biometric standards
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   )

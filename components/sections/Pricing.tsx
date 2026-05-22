@@ -1,154 +1,179 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { Check, Zap } from 'lucide-react'
-import { FadeIn, StaggerContainer, staggerItem } from '@/components/ui/animations'
+import { motion } from "framer-motion";
+import { Check, ArrowRight } from "lucide-react";
+import { StaggerContainer, staggerItem } from "@/components/ui/animations";
+import SectionHeading from "@/components/ui/SectionHeading";
 
 const plans = [
   {
-    name: 'Basic',
+    name: "Basic",
     price: 4.99,
-    description: 'Perfect for a one-time passport photo need.',
+    description: "For a single passport or visa photo.",
     features: [
-      '1 digital passport photo',
-      'AI background removal',
-      'Compliance check',
-      'Instant download',
-      'Email delivery',
+      "1 digital passport photo",
+      "AI background removal",
+      "Compliance check",
+      "Instant download",
+      "Email delivery",
     ],
-    cta: 'Get Started',
+    cta: "Get started",
     featured: false,
     badge: null,
   },
   {
-    name: 'Standard',
+    name: "Standard",
     price: 9.99,
-    description: 'Our most popular plan for individuals.',
+    description: "Most popular for individuals.",
     features: [
-      '4 digital photos (print-ready)',
-      'AI background removal',
-      'Compliance check + human review',
-      'Instant download',
-      'Printable 4×6 sheet',
-      '100% acceptance guarantee',
-      'Priority support',
+      "4 digital photos (print-ready)",
+      "AI background removal",
+      "Compliance + human review",
+      "Instant download",
+      "Printable 4×6 sheet",
+      "100% acceptance guarantee",
+      "Priority support",
     ],
-    cta: 'Get Standard',
+    cta: "Get Standard",
     featured: true,
-    badge: 'Most Popular',
+    badge: "Most popular",
   },
   {
-    name: 'Family',
+    name: "Family",
     price: 19.99,
-    description: 'Best value for multiple people or documents.',
+    description: "Best value for multiple people.",
     features: [
-      'Up to 5 people / documents',
-      'AI + human expert review',
-      'All document types (passport, visa, ID)',
-      'Instant download for all',
-      'Printable sheets included',
-      '100% acceptance guarantee',
-      '24/7 dedicated support',
+      "Up to 5 people or documents",
+      "AI + expert review",
+      "Any document type",
+      "Instant download for all",
+      "Print sheets included",
+      "100% acceptance guarantee",
+      "24/7 dedicated support",
     ],
-    cta: 'Get Family Plan',
+    cta: "Get Family",
     featured: false,
-    badge: 'Best Value',
+    badge: "Best value",
   },
-]
+];
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-20 lg:py-28 bg-gradient-to-b from-slate-50 to-white">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        {/* Header */}
-        <FadeIn className="text-center mb-14">
-          <span className="inline-block px-4 py-1.5 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
-            Simple Pricing
-          </span>
-          <h2
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4"
-            style={{ fontFamily: 'var(--font-sora)' }}
-          >
-            One-time payment. No subscriptions.
-          </h2>
-          <p className="text-slate-500 text-lg max-w-xl mx-auto">
-            Pay once, get your compliant passport photo instantly. No hidden fees, no monthly charges.
-          </p>
-        </FadeIn>
+    <section id="pricing" className="py-24 lg:py-32 bg-white">
+      <div className="container-page">
+        <SectionHeading
+          eyebrow="Pricing"
+          title="One payment. No subscriptions."
+          description="Pay once, get your compliant photo instantly. If it gets rejected, you get your money back — every plan, every time."
+        />
 
-        {/* Plans */}
-        <StaggerContainer className="grid md:grid-cols-3 gap-6" staggerDelay={0.1}>
+        <StaggerContainer
+          className="mt-16 grid md:grid-cols-3 gap-5 lg:gap-6 max-w-6xl mx-auto"
+          staggerDelay={0.08}
+        >
           {plans.map((plan) => (
             <motion.div
               key={plan.name}
               variants={staggerItem}
-              whileHover={{ y: plan.featured ? -4 : -4, transition: { duration: 0.22 } }}
-              className={`relative rounded-3xl p-7 border flex flex-col transition-shadow duration-300 ${
+              className={`relative rounded-2xl p-7 flex flex-col transition-all duration-300 hover:-translate-y-1 ${
                 plan.featured
-                  ? 'bg-gradient-to-b from-blue-600 to-blue-700 border-blue-500 shadow-2xl shadow-blue-200 text-white'
-                  : 'bg-white border-slate-200 hover:shadow-xl hover:shadow-slate-100'
+                  ? "bg-slate-900 text-white shadow-2xl shadow-slate-900/20 ring-1 ring-slate-900"
+                  : "bg-white border border-slate-200 shadow-card hover:shadow-card-hover"
               }`}
             >
-              {/* Badge */}
               {plan.badge && (
-                <div className={`absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold shadow ${
-                  plan.featured
-                    ? 'bg-amber-400 text-amber-900'
-                    : 'bg-blue-100 text-blue-700'
-                }`}>
+                <div
+                  className={`absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm ${
+                    plan.featured
+                      ? "bg-amber-400 text-amber-950"
+                      : "bg-slate-100 text-slate-700"
+                  }`}
+                >
                   {plan.badge}
                 </div>
               )}
 
-              {/* Plan header */}
               <div className="mb-6">
-                <p className={`text-sm font-semibold uppercase tracking-wider mb-1 ${plan.featured ? 'text-blue-200' : 'text-slate-400'}`}>
+                <p
+                  className={`text-[11px] font-semibold uppercase tracking-[0.15em] mb-3 ${
+                    plan.featured ? "text-slate-400" : "text-slate-500"
+                  }`}
+                >
                   {plan.name}
                 </p>
-                <div className="flex items-end gap-1 mb-2">
-                  <span className={`text-4xl font-bold ${plan.featured ? 'text-white' : 'text-slate-900'}`} style={{ fontFamily: 'var(--font-sora)' }}>
+                <div className="flex items-end gap-1.5 mb-3">
+                  <span
+                    className={`font-display text-5xl font-semibold tracking-tight ${
+                      plan.featured ? "text-white" : "text-slate-900"
+                    }`}
+                  >
                     ${plan.price}
                   </span>
-                  <span className={`text-sm mb-1.5 ${plan.featured ? 'text-blue-200' : 'text-slate-400'}`}>one-time</span>
+                  <span
+                    className={`text-sm mb-2 ${
+                      plan.featured ? "text-slate-400" : "text-slate-500"
+                    }`}
+                  >
+                    one-time
+                  </span>
                 </div>
-                <p className={`text-sm ${plan.featured ? 'text-blue-200' : 'text-slate-500'}`}>
+                <p
+                  className={`text-sm ${
+                    plan.featured ? "text-slate-300" : "text-slate-600"
+                  }`}
+                >
                   {plan.description}
                 </p>
               </div>
 
-              {/* Features */}
+              <div
+                className={`h-px ${plan.featured ? "bg-slate-800" : "bg-slate-100"} mb-6`}
+              />
+
               <ul className="space-y-3 flex-1 mb-8">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-2.5 text-sm">
-                    <Check className={`w-4 h-4 mt-0.5 flex-shrink-0 ${plan.featured ? 'text-blue-200' : 'text-emerald-500'}`} />
-                    <span className={plan.featured ? 'text-blue-100' : 'text-slate-600'}>{f}</span>
+                    <div
+                      className={`w-4 h-4 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0 ${
+                        plan.featured ? "bg-blue-500" : "bg-emerald-500"
+                      }`}
+                    >
+                      <Check
+                        className="w-2.5 h-2.5 text-white"
+                        strokeWidth={3}
+                      />
+                    </div>
+                    <span
+                      className={
+                        plan.featured ? "text-slate-200" : "text-slate-700"
+                      }
+                    >
+                      {f}
+                    </span>
                   </li>
                 ))}
               </ul>
 
-              {/* CTA */}
               <a
                 href="https://mysnappass.com/upload"
-                className={`shine-hover flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 ${
+                className={`group flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 ${
                   plan.featured
-                    ? 'bg-white text-blue-700 hover:bg-blue-50 shadow-xl'
-                    : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-100'
+                    ? "bg-white text-slate-900 hover:bg-blue-50"
+                    : "bg-slate-900 text-white hover:bg-slate-800"
                 }`}
               >
-                <Zap className="w-4 h-4" />
                 {plan.cta}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </a>
             </motion.div>
           ))}
         </StaggerContainer>
 
-        {/* Money-back note */}
-        <FadeIn delay={0.3} className="text-center mt-10">
-          <p className="text-sm text-slate-500">
-            🛡️ All plans include our <span className="font-semibold text-slate-700">100% money-back guarantee</span> if your photo is rejected.
-          </p>
-        </FadeIn>
+        <p className="text-center text-sm text-slate-500 mt-10 max-w-md mx-auto">
+          All plans include our money-back guarantee. If your photo is rejected,
+          we refund you in full — no questions asked.
+        </p>
       </div>
     </section>
-  )
+  );
 }

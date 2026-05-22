@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useReducedMotion } from 'framer-motion'
 import { useRef, ReactNode } from 'react'
 
 interface FadeInProps {
@@ -9,6 +9,7 @@ interface FadeInProps {
   direction?: 'up' | 'down' | 'left' | 'right' | 'none'
   className?: string
   once?: boolean
+  distance?: number
 }
 
 export function FadeIn({
@@ -17,24 +18,33 @@ export function FadeIn({
   direction = 'up',
   className = '',
   once = true,
+  distance = 24,
 }: FadeInProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once, margin: '-80px' })
+  const shouldReduceMotion = useReducedMotion()
 
   const dirMap = {
-    up: { y: 30 },
-    down: { y: -30 },
-    left: { x: 40 },
-    right: { x: -40 },
+    up: { y: distance },
+    down: { y: -distance },
+    left: { x: distance },
+    right: { x: -distance },
     none: {},
   }
+
+  const initial = shouldReduceMotion ? { opacity: 0 } : { opacity: 0, ...dirMap[direction] }
+  const animate = isInView ? { opacity: 1, x: 0, y: 0 } : {}
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, ...dirMap[direction] }}
-      animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={initial}
+      animate={animate}
+      transition={{
+        duration: shouldReduceMotion ? 0.2 : 0.6,
+        delay: shouldReduceMotion ? 0 : delay,
+        ease: [0.22, 1, 0.36, 1],
+      }}
       className={className}
     >
       {children}
@@ -48,9 +58,14 @@ interface StaggerProps {
   staggerDelay?: number
 }
 
-export function StaggerContainer({ children, className = '', staggerDelay = 0.1 }: StaggerProps) {
+export function StaggerContainer({
+  children,
+  className = '',
+  staggerDelay = 0.08,
+}: StaggerProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const shouldReduceMotion = useReducedMotion()
 
   return (
     <motion.div
@@ -60,7 +75,9 @@ export function StaggerContainer({ children, className = '', staggerDelay = 0.1 
       variants={{
         hidden: {},
         visible: {
-          transition: { staggerChildren: staggerDelay },
+          transition: {
+            staggerChildren: shouldReduceMotion ? 0 : staggerDelay,
+          },
         },
       }}
       className={className}
@@ -71,10 +88,10 @@ export function StaggerContainer({ children, className = '', staggerDelay = 0.1 
 }
 
 export const staggerItem = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
   },
 }
